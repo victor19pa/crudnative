@@ -38,6 +38,7 @@ const App = () => {
   
   return (
     <>
+    <PaperProvider>
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName='Inicio'
@@ -81,6 +82,7 @@ const App = () => {
           />
         </Stack.Navigator>
       </NavigationContainer>
+    </PaperProvider>
     </>
   );
 };
