@@ -1,0 +1,25 @@
+{
+    "clientes": [
+        {
+            "nombre": "juan",
+            "telefono": "123456",
+            "empresa": "codigo con juan",
+            "correos": "correo1@correo.com",
+            "id": "1"
+        },
+        {
+            "nombre": "carlos",
+            "telefono": "123456",
+            "empresa": "codigo con juan",
+            "correos": "correo2@correo.com",
+            "id": "2"
+        },
+        {
+            "nombre": "jeffer",
+            "telefono": "123456",
+            "empresa": "codigo con juan",
+            "correos": "correo3@correo.com",
+            "id": "3"
+        }
+    ]
+}

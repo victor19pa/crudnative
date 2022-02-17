@@ -1,16 +1,28 @@
-import axios, { Axios } from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import { Button, Dialog, Headline, Paragraph, Portal, TextInput } from 'react-native-paper'
 import globalStyles from '../styles/global'
+import axios from 'axios'
 
-const NuevoCliente = () => {
+const NuevoCliente = ({navigation, route}) => {
+
+    const { setConsultarAPI } = route.params;
     //campos formulario
     const [ nombre, setNombre ] = useState('')
     const [ telefono, setTelefono ] = useState('')
     const [ correo, setCorreo ] = useState('')
     const [ empresa, setEmpresa ] = useState('')
     const [ alerta, setAlerta] = useState(false)
+
+    useEffect(()=>{
+        if(route.params.cliente){
+            const { nombre, telefono, empresa, correo } = route.params.cliente
+            setNombre(nombre)
+            setTelefono(telefono)
+            setCorreo(correo)
+            setEmpresa(empresa)
+        }
+    },[])
 
     const guardarCliente = async () => {
         //validacion
@@ -20,25 +32,31 @@ const NuevoCliente = () => {
         }
 
         //generar cliente
-        const cliente = { nombre, telefono, correo, empresa}
+        const cliente = { nombre, telefono, correo, empresa }
         console.log('cliente: ', cliente)
         //guardar cliente en API
         try {
-            // if(Platform.OS==='iOS'){
-            //     await axios.post('http://localhost:3000/cliente', cliente)
-            // }else if(Platform.OS==='android'){
-            //     await axios.post('http://10.0.2.2:3000/clientes', cliente)
-            // }else{
-            //     console.log('conectado de usb')
-            // }
-            await axios.post('http://192.168.0.13:3000/clientes', cliente)
-            //console.log(respuesta)
+            if(Platform.OS === 'ios'){
+                await axios.post('http://localhost:3000/clientes', cliente)
+            }else if(Platform.OS === 'android'){
+                await axios.post('http://10.0.2.2:3000/clientes', cliente)
+            }else{
+                await axios.post('http://192.168.0.13:3000/clientes', cliente)
+            }
+            console.log(respuesta)
         } catch (error) {
             console.log('No entro, ', error)
         }
         //redireccionar
-
+        navigation.navifate('Inicio')
         //limpiar form
+        setNombre('');
+        setTelefono('');
+        setCorreo('');
+        setEmpresa('');
+
+        //cambiar true para traer nuevo cleinte
+        setConsultarAPI(true)
     }
 
     return (
